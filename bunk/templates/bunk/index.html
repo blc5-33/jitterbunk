@@ -1,0 +1,24 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bunk/style.css' %}">
+<h style='font-size: 40px'>All ongoing animal bunks:</h>
+{% if latest_bunk_list %}
+<ul>
+  {% for bunk in latest_bunk_list %}
+  {% comment %} <li><a href="{% url 'polls:detail' bunk.id %}">{{ bunk.bunk_text }}</a></li> {% endcomment %}
+  <li>
+    <img src={{bunk.from_user.photo}} />
+    <a class="user" href="{% url "bunk:user" bunk.from_user.id %}">
+      {{bunk.from_user.username}}
+    </a>
+    to 
+    <img src={{bunk.to_user.photo}} />
+    <a class="user" href="{% url "bunk:user" bunk.to_user.id %}">
+      {{bunk.to_user.username}}
+    </a>
+    (<em>est. {{bunk.pub_date}}</em>)
+  </li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No bunks are available.</p>
+{% endif %}
