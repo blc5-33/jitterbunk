@@ -1,6 +1,10 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'bunk/style.css' %}">
-<p style='font-size: 40px'>User <b>{{user.username}}</b> is currently bunking with:</p>
+<p style='font-size: 40px'>
+  User 
+  <img src='{{user.photo}}' />
+  <b>{{user.username}}</b> is currently bunking with:
+</p>
 <ul>
   {% for bunk in user.bunks_from_user.all %}
   <li>
@@ -17,12 +21,12 @@
   </li>
   {% endfor %}
 </ul>
-<form action="{% url 'bunk:addbunkmate' user.id 4 %}" method='post'>
+<form action="{% url 'bunk:addbunkmate' user.id %}" method='post'>
   {% csrf_token %}
   <div style='display: flex;'>
-    <legend><h1>Add new bunkmate: </h1>   </legend>
+    <legend><h4>Add new bunkmate: </h4>   </legend>
     {% if error_message %}<h2 class='error'>{{error_message}}</h2> {% endif %}
-    <input type='text' name='addbunkmate' placeholder='Bunkmate username...'></input>
+    <input type='text' name='bm_username' placeholder='Bunkmate username...'></input>
   </div>
   <input type="submit" value='Submit New Bunkmate Name'>
 </form>

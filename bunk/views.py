@@ -21,16 +21,16 @@ class DetailView(generic.DetailView):
     # def get_queryset(self):
     #     return User.bunk_set.all()
 
-def addbunkmate(request, from_user_id, to_user_id):
+def addbunkmate(request, from_user_id):
     from_user = get_object_or_404(User, pk=from_user_id)
     try:
         # to_user = User.objects.get(pk=request.POST['to_user_id'])
-        to_user = User.objects.get(pk=to_user_id)
+        to_user = User.objects.get(username=request.POST['bm_username'])
     except (KeyError, User.DoesNotExist):
         # Redisplay the form.
         return render(request, 'bunk/user.html', {
             'error_message': "Invalid/nonexistent username.",
-            'user': from_user
+            'user': from_user,
         })
     else:
         new_bunk = Bunk.create(from_user, to_user, timezone.now())
